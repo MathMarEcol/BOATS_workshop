@@ -10,9 +10,9 @@
 clear
 
 % Set root directory where you have saved 'BOATS_workshop'
-root_dir = '/Users/ryanheneghan 1/Desktop/Presentations/';
+root_dir = '~/GitHub/';
 
-projectdir = join([root_dir, 'BOATS_workshop/BOATS_files/']);
+projectdir = join([root_dir, 'BOATS_workshop/files/']);
 
 cd(projectdir)
 
