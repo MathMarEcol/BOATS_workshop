@@ -21,9 +21,10 @@
 % Outputs:
 %   - Boats.mat
 %**************************************************************************
-root_dir = '/Users/ryanheneghan 1/Desktop/Presentations/';
 
-working_dir = join([root_dir, 'BOATS_workshop/BOATS_master']);
+step0_set_base_dir
+
+working_dir = join([base_dir, 'BOATS_workshop/']);
 
 cd(working_dir);
 

@@ -3,15 +3,15 @@
 % Default parameters and tunable variables, paths, of the BOATS model
 %**************************************************************************
  
-root_dir = '/Users/ryanheneghan 1/Desktop/Presentations/';
+step0_set_base_dir
 
 %**************************************************************************
 % MAIN TUNABLE PARAMETERS
 %**************************************************************************
 % Paths *******************************************
 
- boats.param.path.wrkdir = [join([root_dir, 'BOATS_workshop/BOATS_master'])];
- boats.param.path.outdir = [join([root_dir, 'BOATS_workshop/BOATS_files/raw_output'])];
+ boats.param.path.wrkdir = [join([base_dir, 'BOATS_workshop/BOATS_master'])];
+ boats.param.path.outdir = [join([base_dir, 'BOATS_workshop/files/raw_output'])];
 % Names and Switches ******************************
  boats.param.main.sim_type     = 'nh';                                     % No Harvest 'nh' or Harvest simulations 'h'
  boats.param.main.sim_init     = 'restart';                                % Initialisation from 'PP' or else 'restart'

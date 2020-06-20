@@ -1,2 +1,6 @@
 
 .DS_Store
+files/processed_forcings/
+files/raw_output/cesm
+files/processed_output
+Ecological.mat

@@ -23,13 +23,13 @@
 clear all
 
 % Set root directory where you have saved 'BOATS_workshop'
-root_dir = '/Users/ryanheneghan 1/Desktop/Presentations/';
+step0_set_base_dir
 
 % Load in preprocess functions
-addpath(join([root_dir, 'BOATS_workshop/BOATS_master/preprocess'])); 
+addpath(join([base_dir, 'BOATS_workshop/BOATS_master/preprocess'])); 
 
 % Set project directory
-projectdir = join([root_dir, 'BOATS_workshop/BOATS_files/']);
+projectdir = join([base_dir, 'BOATS_workshop/BOATS_files/']);
 
 cd(projectdir);
 
@@ -183,7 +183,7 @@ if create_ecology
     Ecological.npp=npp;
     Ecological.npp_ed=npp_ed;
     Ecological.temperature=temperature;
-    save(join([root_dir, 'BOATS_workshop/BOATS_master/Ecological.mat']),'Ecological','-v7.3')
+    save(join([base_dir, 'BOATS_workshop/BOATS_master/Ecological.mat']),'Ecological','-v7.3')
 end
 
 % Load and convert economical forcing *************  
