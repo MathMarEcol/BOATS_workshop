@@ -14,7 +14,7 @@ frag_name_one = ["historical", "historical", "historical", "rcp85", "rcp85"];
 frag_name_two = ["1850-1899", "1900-1949", "1950-2005", "2006-2049", "2050-2100"];
 var2sav = ["tcb", "b30cm", "b90cm"];
 var_longname = ["total consumer biomass density", "consumer biomass density > 30cm", "consumer biomass density > 90cm"];
-time_unit_list = 'months since 1850-1-1 00:00:00';
+time_unit_list = {'months since 1850-1-1 00:00:00'};
 
 % Import ensemble outputs for each experimental run and calculate mean
 for i = 1:length(climate_models)
@@ -40,26 +40,24 @@ for i = 1:length(climate_models)
     mean_ens = mean_ens./length(curr_search); % Calculate mean over ensembles
     
     %%% Create arrays for tcb, b10 and b30
-    saver_root = join([save_dir, climate_models(i)]);
+    saver_root = join([save_dir, climate_models(i), "/"],"");
+    if ~exist(saver_root)
+        mkdir(saver_root)
+    end
     
     for m = 1:3 % Loop over variables that you're saving
     disp(var2sav(m)) 
     curr_var = squeeze(mean_ens(:,:,:,m)); % Extract current variable
     %curr_var = curr_var(:,[181:360,1:180],:); % Convert longitudes from 0 - 360 to -180 to 180
-   
-    curr_frag_start_index = frag_start_index(i);
-    curr_frag_end_index = frag_end_index(i);
-    curr_frag_name_one = frag_name_one{i};
-    curr_frag_name_two = frag_name_two{[i]};
-    
+       
     cv_name = strcat(saver_root, root_name(i), "_");
     
-    for n = 1:length(curr_frag_name_one)
+    for n = 1:length(frag_name_one)
         disp(n)
-       cfsone = curr_frag_start_index(n);
-       cfstwo = curr_frag_end_index(n);
-       cfone = curr_frag_name_one(n);
-       cftwo = curr_frag_name_two(n);
+       cfsone = frag_start_index(n);
+       cfstwo = frag_end_index(n);
+       cfone = frag_name_one(n);
+       cftwo = frag_name_two(n);
        curr_name = strcat(cv_name, cfone, "_nosoc_co2_", var2sav(m), "_global_monthly_", cftwo, ".nc4");
        curr_var_chunk = curr_var(cfsone:cfstwo,:,:);
        disp(curr_name)
