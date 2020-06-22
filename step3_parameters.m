@@ -11,7 +11,7 @@ step0_set_base_dir
 % Paths *******************************************
 
  boats.param.path.wrkdir = [join([base_dir, 'BOATS_workshop'])];
- boats.param.path.outdir = [join([base_dir, 'BOATS_workshop/files/raw_output'])];
+ boats.param.path.outdir = [join([base_dir, 'BOATS_workshop/files/raw_output/cesm/'])];
 % Names and Switches ******************************
  boats.param.main.sim_type     = 'nh';                                     % No Harvest 'nh' or Harvest simulations 'h'
  boats.param.main.sim_init     = 'restart';                                % Initialisation from 'PP' or else 'restart'

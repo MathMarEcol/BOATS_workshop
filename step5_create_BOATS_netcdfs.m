@@ -1,9 +1,9 @@
 
 %%%% This script creates the netcdfs for the FishMIP 2019 protocol for the BOATS model
-base_dir = '/Users/ryanheneghan 1/Desktop/Presentations/';
+step0_set_base_dir
 
-root_dir = join([base_dir, 'BOATS_workshop/BOATS_files/raw_output/']);
-save_dir = join([base_dir, 'BOATS_workshop/BOATS_files/processed_output/']);
+root_dir = join([base_dir, 'BOATS_workshop/files/raw_output/']);
+save_dir = join([base_dir, 'BOATS_workshop/files/processed_output/']);
 
 climate_models = "cesm";
 name_frags = "*_clim_nh*";
@@ -24,15 +24,15 @@ for i = 1:length(climate_models)
    for j = 1:length(name_frags) % Loop over name_frags (if you are running multiple esms or scenarios)
        
    disp(name_frags(j))
-   curr_dir = join([root_dir, climate_models(i), "/"]);
+   curr_dir = join([root_dir, climate_models(i), "/"], "");
    
  
-   curr_search = dir(join([curr_dir, name_frags(j)]));
+   curr_search = dir(join([curr_dir, name_frags(j)],""));
    mean_ens = 0;
    
     for k = 1:length(curr_search) % Load ensemble member and add to mean_ens, these files are big so this takes a while
     disp(k)
-    curr_ens_run = load(join([curr_search(k).folder, curr_search(k).name]));
+    curr_ens_run = load(join([curr_search(k).folder "/", curr_search(k).name],""));
     curr_ens_run = curr_ens_run.boats.output.all.fishmip_g_out; % Fishmip_g_out is arrays with tcb, >30cm and >90cm that are 360x180xntime
     mean_ens = mean_ens + curr_ens_run;
     end
@@ -47,9 +47,9 @@ for i = 1:length(climate_models)
     curr_var = squeeze(mean_ens(:,:,:,m)); % Extract current variable
     %curr_var = curr_var(:,[181:360,1:180],:); % Convert longitudes from 0 - 360 to -180 to 180
    
-    curr_frag_start_index = frag_start_index{[i]};
-    curr_frag_end_index = frag_end_index{[i]};
-    curr_frag_name_one = frag_name_one{[i]}{[j]};
+    curr_frag_start_index = frag_start_index(i);
+    curr_frag_end_index = frag_end_index(i);
+    curr_frag_name_one = frag_name_one{i};
     curr_frag_name_two = frag_name_two{[i]};
     
     cv_name = strcat(saver_root, root_name(i), "_");
