@@ -11,18 +11,19 @@ step0_set_base_dir
 % Paths *******************************************
 
  boats.param.path.wrkdir = [join([base_dir, 'BOATS_workshop'])];
- boats.param.path.outdir = [join([base_dir, 'BOATS_workshop/files/raw_output/cesm/'])];
-% Names and Switches ******************************
+ boats.param.path.outdir = [join([base_dir, 'BOATS_workshop/files/raw_output/'])];
+ % Names and Switches ******************************
  boats.param.main.sim_type     = 'nh';                                     % No Harvest 'nh' or Harvest simulations 'h'
  boats.param.main.sim_init     = 'restart';                                % Initialisation from 'PP' or else 'restart'
- boats.param.main.sim_name     = 'Boats_CESM_clim';                              % Simulation name
+ boats.param.main.climate_model= "cesm";                                   % Climate model name
+ boats.param.main.sim_name     = 'Boats_CESM_clim';                        % Simulation name
  boats.param.main.model_version= 'VB1';                                    % Model version
  boats.param.main.save_restart = 0;                                        % Save restart: yes=1 ; no=0
  boats.param.main.save_output  = 1;                                        % Save output: yes=1 ; no=0
 % Simulation features *****************************
- boats.param.main.run_length   = 251;                                        % Simulation length in years 
+ boats.param.main.run_length   = 251;                                      % Simulation length in years 
  boats.param.main.dtt          = 30;                                       % days per timestep
- boats.param.main.nforcing     = 180;                                       % number of forcing to loop
+ boats.param.main.nforcing     = 180;                                      % number of forcing to loop
  boats.param.main.param_ens    = 1;                                        % Use parameters ensembles: yes=1 ; no=0
  boats.param.main.dataset_ens  = 'ensemble_parameters.mat';                % if param_ens=1 name of ensemble parameters
 %**************************************************************************
@@ -40,7 +41,7 @@ step0_set_base_dir
                                        *boats.param.main.nforcing;         % seconds per forcing
  boats.param.conversion.gC_2_wetB    = 10;                                 % grams of wet fish biomass per gram of fish carbon
  boats.param.conversion.mmolC_2_wetB = (12*boats.param.conversion.gC_2_wetB)/1000; % grams of wet fish biomass per mmol of fish carbon
- boats.param.conversion.mmolC_2gC = 12/1000; % grams of carbon fish biomass per mmol of fish carbon
+ boats.param.conversion.mmolC_2gC    = 12/1000;                            % grams of carbon fish biomass per mmol of fish carbon
  boats.param.conversion.C_2_K        = 273.15;                             % deg C to Kelvin
  boats.param.conversion.epsln        = 1e-50;                              % small epsilon
  boats.param.main.dtts               = 30*24*3600;                         % seconds per timestep
@@ -84,12 +85,12 @@ step0_set_base_dir
  boats.param.ecology.rep_pos     = 1;                                      % position parameter of sigmoidal allocation to reproduction function as fraction of malpha
 % Size class **************************************
  boats.param.ecology.nfmass 	 = 50;                                     % number of fish mass classes
- boats.param.ecology.minfishmip  = [10 300 8500]; % minimum size for fishmip calculation (RYAN HENEGHAN - JULY 2019)
- boats.param.ecology.minf = [0.01*(30/0.95)^3 0.01*(90/0.95)^3 1e5];% asymptotic mass
+ boats.param.ecology.minfishmip  = [10 300 8500];                          % minimum size for fishmip calculation (RYAN HENEGHAN - JULY 2019)
+ boats.param.ecology.minf = [0.01*(30/0.95)^3 0.01*(90/0.95)^3 1e5];       % asymptotic mass
  boats.param.ecology.eta_alpha   = 0.25;						           % mass at maturity as fraction of asymptotic mass 
  boats.param.ecology.malpha      = boats.param.ecology.eta_alpha*boats.param.ecology.minf; % maturity mass
  boats.param.ecology.nfish       = length(boats.param.ecology.minf);       % number of fish groups
- boats.param.ecology.nfishmip = length(boats.param.ecology.minfishmip); % number of groups for fishmip (RYAN HENEGHAN - JULY 2019)
+ boats.param.ecology.nfishmip = length(boats.param.ecology.minfishmip);    % number of groups for fishmip (RYAN HENEGHAN - JULY 2019)
 
                           
 %**************************************************************************

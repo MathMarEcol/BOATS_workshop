@@ -29,7 +29,7 @@ step0_set_base_dir
 addpath(join([base_dir, 'BOATS_workshop/preprocess'])); 
 
 % Set project directory
-projectdir = join([base_dir, 'BOATS_workshop/files/']);
+projectdir = join([base_dir, 'BOATS_workshop/files']);
 
 cd(projectdir);
 

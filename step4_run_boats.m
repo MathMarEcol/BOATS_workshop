@@ -49,6 +49,9 @@ cd(working_dir);
  if ~exist(boats.param.path.outdir)
     mkdir(boats.param.path.outdir)
  end
+ if ~exist(join([boats.param.path.outdir boats.param.main.climate_model],'/'))
+    mkdir(join([boats.param.path.outdir boats.param.main.climate_model],'/'))
+ end
 
  
 %**************************************************************************
@@ -136,9 +139,9 @@ cd(working_dir);
    % Save output
    %-----------------------------------------------------------------------------------------------------------
    if boats.param.main.save_output==1
-     savenameall = [boats.param.main.sim_name '_' boats.param.main.sim_type boats.param.main.sname_rest '.mat'];
+     savenameall = join([boats.param.main.climate_model '/' boats.param.main.sim_name '_' boats.param.main.sim_type boats.param.main.sname_rest '.mat'],"");
      disp(['saving boats2d structure:' savenameall]);
-     parsave_boats([boats.param.path.outdir savenameall],boats);                            % Note: parsave is for parallel runs   
+     parsave_boats(join([boats.param.path.outdir savenameall],""),boats);       % Note: parsave is for parallel runs   
    end
  end
 %--------------------------------------------------------------------------------------------------------------
