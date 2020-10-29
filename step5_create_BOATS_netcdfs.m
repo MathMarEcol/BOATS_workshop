@@ -1,9 +1,9 @@
 
 %%%% This script creates the netcdfs for the FishMIP 2019 protocol for the BOATS model
-base_dir = '/Users/ryanheneghan 1/Desktop/Presentations/';
+step0_set_base_dir
 
-root_dir = join([base_dir, 'BOATS_workshop/BOATS_files/raw_output/']);
-save_dir = join([base_dir, 'BOATS_workshop/BOATS_files/processed_output/']);
+root_dir = join([base_dir, 'BOATS_workshop/files/raw_output/']);
+save_dir = join([base_dir, 'BOATS_workshop/files/processed_output/']);
 
 climate_models = "cesm";
 name_frags = "*_clim_nh*";
@@ -14,7 +14,7 @@ frag_name_one = ["historical", "historical", "historical", "rcp85", "rcp85"];
 frag_name_two = ["1850-1899", "1900-1949", "1950-2005", "2006-2049", "2050-2100"];
 var2sav = ["tcb", "b30cm", "b90cm"];
 var_longname = ["total consumer biomass density", "consumer biomass density > 30cm", "consumer biomass density > 90cm"];
-time_unit_list = 'months since 1850-1-1 00:00:00';
+time_unit_list = {'months since 1850-1-1 00:00:00'};
 
 % Import ensemble outputs for each experimental run and calculate mean
 for i = 1:length(climate_models)
@@ -24,15 +24,15 @@ for i = 1:length(climate_models)
    for j = 1:length(name_frags) % Loop over name_frags (if you are running multiple esms or scenarios)
        
    disp(name_frags(j))
-   curr_dir = join([root_dir, climate_models(i), "/"]);
+   curr_dir = join([root_dir, climate_models(i), "/"], "");
    
  
-   curr_search = dir(join([curr_dir, name_frags(j)]));
+   curr_search = dir(join([curr_dir, name_frags(j)],""));
    mean_ens = 0;
    
     for k = 1:length(curr_search) % Load ensemble member and add to mean_ens, these files are big so this takes a while
     disp(k)
-    curr_ens_run = load(join([curr_search(k).folder, curr_search(k).name]));
+    curr_ens_run = load(join([curr_search(k).folder "/", curr_search(k).name],""));
     curr_ens_run = curr_ens_run.boats.output.all.fishmip_g_out; % Fishmip_g_out is arrays with tcb, >30cm and >90cm that are 360x180xntime
     mean_ens = mean_ens + curr_ens_run;
     end
@@ -40,26 +40,24 @@ for i = 1:length(climate_models)
     mean_ens = mean_ens./length(curr_search); % Calculate mean over ensembles
     
     %%% Create arrays for tcb, b10 and b30
-    saver_root = join([save_dir, climate_models(i)]);
+    saver_root = join([save_dir, climate_models(i), "/"],"");
+    if ~exist(saver_root)
+        mkdir(saver_root)
+    end
     
     for m = 1:3 % Loop over variables that you're saving
     disp(var2sav(m)) 
     curr_var = squeeze(mean_ens(:,:,:,m)); % Extract current variable
     %curr_var = curr_var(:,[181:360,1:180],:); % Convert longitudes from 0 - 360 to -180 to 180
-   
-    curr_frag_start_index = frag_start_index{[i]};
-    curr_frag_end_index = frag_end_index{[i]};
-    curr_frag_name_one = frag_name_one{[i]}{[j]};
-    curr_frag_name_two = frag_name_two{[i]};
-    
+       
     cv_name = strcat(saver_root, root_name(i), "_");
     
-    for n = 1:length(curr_frag_name_one)
+    for n = 1:length(frag_name_one)
         disp(n)
-       cfsone = curr_frag_start_index(n);
-       cfstwo = curr_frag_end_index(n);
-       cfone = curr_frag_name_one(n);
-       cftwo = curr_frag_name_two(n);
+       cfsone = frag_start_index(n);
+       cfstwo = frag_end_index(n);
+       cfone = frag_name_one(n);
+       cftwo = frag_name_two(n);
        curr_name = strcat(cv_name, cfone, "_nosoc_co2_", var2sav(m), "_global_monthly_", cftwo, ".nc4");
        curr_var_chunk = curr_var(cfsone:cfstwo,:,:);
        disp(curr_name)

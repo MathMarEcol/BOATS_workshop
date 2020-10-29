@@ -10,9 +10,9 @@
 clear
 
 % Set root directory where you have saved 'BOATS_workshop'
-root_dir = '~/GitHub/';
+step0_set_base_dir
 
-projectdir = join([root_dir, 'BOATS_workshop/files/']);
+projectdir = join([base_dir, 'BOATS_workshop/files/']);
 
 cd(projectdir)
 
@@ -37,7 +37,7 @@ for n = 2:length(intp_rcp_files)
 end
 
 intpp_climate = cat(3, intpp_hist, intpp_rcp85);
-intpp_climate(:,:,1861:1872) = []; % Remove duplicate year (2005 repeated in historical and rcp85)
+%intpp_climate(:,:,1861:1872) = []; % Remove duplicate year (if 2005 repeated in historical and rcp85)
 %imagesc(intpp_climate(:,:,1)) % look at first month of intpp
 %colorbar
 
@@ -72,6 +72,11 @@ tarea = transpose(tarea);
 %imagesc(tarea) % look at grid cell area map
 %colorbar
 
+%for saving purposes
+lats = lat_cesm(1,:);
+lons = transpose(lon_cesm(:,1));
+
+
 %% Sea surface temperature
 % Historical and rcp85
 temp_hist_files = dir('raw_forcings/hist/to_zs/*to_zs*');
@@ -92,7 +97,7 @@ for n = 2:length(temp_rcp_files)
 end
 
 temp_climate = cat(3, temp_hist, temp_rcp85);
-temp_climate(:,:,1861:1872) = []; % Remove duplicate year (2005 repeated in historical and rcp85)
+%temp_climate(:,:,1861:1872) = []; % Remove duplicate year (if 2005 repeated in historical and rcp85 data)
 %imagesc(temp_climate(:,:,1)); % look at first months of temperature
 %colorbar
 

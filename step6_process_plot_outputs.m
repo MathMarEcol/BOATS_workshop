@@ -1,12 +1,12 @@
 clear
 
-base_dir = '/Users/ryanheneghan 1/Desktop/Presentations/';
-working_dir = join([base_dir, 'BOATS_workshop/BOATS_files/processed_output/']);
+step0_set_base_dir
+working_dir = join([base_dir, 'BOATS_workshop/files/processed_output/']);
 
 cd(working_dir)
 
 % Load in bluewhitered color scale for maps of relative change
-addpath(join([base_dir, 'BOATS_workshop/BOATS_master/plotting'])); 
+addpath(join([base_dir, 'BOATS_workshop/plotting'])); 
 
 %**************************************************************************
 % LOAD CESM OUTPUTS
@@ -22,14 +22,14 @@ for n = 2:length(tcb_files)
 end
 
 % Load tarea file, for global integration
-tareas = load(join([base_dir, 'BOATS_workshop/BOATS_files/processed_forcings/cesm_area.mat']));
+tareas = load(join([base_dir, 'BOATS_workshop/files/processed_forcings/cesm_area.mat']));
 tarea = tareas.tarea;
 
 % Load lats and lons, for plotting global maps
-lons = load(join([base_dir, 'BOATS_workshop/BOATS_files/processed_forcings/cesm_lons.mat']));
-lon = lons.lons;
-lats = load(join([base_dir, 'BOATS_workshop/BOATS_files/processed_forcings/cesm_lats.mat']));
-lat = lats.lats;
+lons = load(join([base_dir, 'BOATS_workshop/files/processed_forcings/cesm_lons.mat']));
+lats = load(join([base_dir, 'BOATS_workshop/files/processed_forcings/cesm_lats.mat']));
+
+[lon, lat] = meshgrid(lons.lons, lats.lats);
 
 %% Draw line plot of change in tcb over time, relative to mean of tcb in 1850-1860
 % 1: calculate mean tcb in 1850-1860, over 360x180 grid, then sum across grid squares, taking into account grid area
@@ -63,7 +63,7 @@ rel_change(1,2) = 60;
 % 5: plot basic map of relative change
 
 figure()
-pcolor(lon,lat,rel_change)
+pcolor(lon,lat,transpose(rel_change))
 colormap(bluewhitered)
 xlabel('Longitude')
 ylabel('Latitude')
